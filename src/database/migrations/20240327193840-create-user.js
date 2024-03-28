@@ -33,7 +33,7 @@ module.exports = {
       curriculo: {
         type: Sequelize.STRING
       },
-      role: {
+      tipo: {
         allowNull: false,
         type: Sequelize.STRING
       },
