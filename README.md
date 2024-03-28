@@ -2,6 +2,10 @@
 
 > npm i
 
+**Rodar a aplicação**
+
+> npm run dev
+
 **Gerar as migrations e as models**
 
 > npx sequelize-cli db:migrate
