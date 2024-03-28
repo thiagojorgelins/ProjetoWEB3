@@ -9,11 +9,19 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
+      nome: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       email: {
         allowNull: false,
         type: Sequelize.STRING
       },
       senha: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      tipo:{
         allowNull: false,
         type: Sequelize.STRING
       },
