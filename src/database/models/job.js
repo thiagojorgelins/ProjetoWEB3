@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Job.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     titulo: DataTypes.STRING,
     descricao: DataTypes.STRING,
     salario: DataTypes.DOUBLE
