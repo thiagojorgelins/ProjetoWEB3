@@ -3,12 +3,12 @@ const UserService = require('../services/userService');
 class UserController {
 
     createUser = async (req, res) => {
-        const { nome, email, cpf } = req.body
-        if (!nome || !email || !password) {
+        const { nome, email, senha, cpf } = req.body
+        if (!nome || !email || !senha) {
             return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
-            const user = await UserService.createUser(nome, email, cpf)
+            const user = await UserService.createUser(nome, email, senha, cpf)
             res.status(201).json(user)
         } catch (error) {
             res.status(500).json(error.message)
@@ -29,20 +29,20 @@ class UserController {
     }
 
     userLogin = async (req, res) => {
-        const { email, password } = req.body
-        if (!email || !password) {
+        const { email, senha } = req.body
+        if (!email || !senha) {
             return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
             const user = await this.userService.getUserByEmail(email)
             if (user) {
-                const password_ok = await bcrypt.compare(password, user.password)
-                if (password_ok) {
+                const senha_ok = await bcrypt.compare(senha, user.senha)
+                if (senha_ok) {
                     let token = jwt.sign({
                         id: user.id,
                         email: user.email,
                         nome: user.nome,
-                        role: user.role
+                        tipo: user.tipo
                     }, process.env.JWT_SECRET, { expiresIn: '1h' })
                     res.status(200).json({ msg: "Usuário logado com sucesso!", token: token })
                 } else {

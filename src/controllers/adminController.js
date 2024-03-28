@@ -4,12 +4,12 @@ const jwt = require("jsonwebtoken")
 
 class AdminControler {
     createAdmin = async (req, res) => {
-        const { nome, email } = req.body
+        const { nome, email, senha } = req.body
         if (!nome || !email || !senha) {
             return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
-            const admin = await AdminService.createAdmin(nome, email)
+            const admin = await AdminService.createAdmin(nome, email, senha)
             res.status(201).json(admin)
         } catch (error) {
             res.status(500).json(error.message)

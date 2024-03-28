@@ -2,16 +2,18 @@ const database = require('../database/models')
 const bcrypt = require('bcrypt')
 class UserService {
 
-    async createUser(nome, email, cpf){
+    async createUser(nome, email,senha, cpf){
         const userData = {
             nome: nome,
             email: email,
-            senha: await bcrypt.hash(password, 10),
+            senha: await bcrypt.hash(senha, 10),
             cpf: cpf,
             tipo: 'User',
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
         try {
-            const user = await database.User.create({userData})
+            const user = await database.User.create(userData)
             return user
         } catch (error){
             return error
