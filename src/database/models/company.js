@@ -37,5 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Company',
   });
+  Company.sync()
   return Company;
 };

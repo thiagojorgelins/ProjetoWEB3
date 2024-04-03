@@ -16,5 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Admin',
   });
+  Admin.sync()
   return Admin;
 };
