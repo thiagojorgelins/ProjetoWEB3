@@ -1,17 +1,23 @@
+const { ValidationErrorItem } = require('sequelize');
 const UserService = require('../services/userService');
 
 class UserController {
 
     createUser = async (req, res) => {
         const { nome, email, senha, cpf } = req.body
+
         if (!nome || !email || !senha) {
             return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
             const user = await UserService.createUser(nome, email, senha, cpf)
-            res.status(201).json(user)
+            if (user.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).json({ error: user.errors[0].message })
+            } else {
+                res.status(201).json({ msg: 'Usuário criado com sucesso!', user: user })
+            }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json({ error: error })
         }
     }
 
@@ -24,7 +30,7 @@ class UserController {
                 res.status(404).json({ msg: 'Nenhum usuário encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json(error)
         }
     }
 
@@ -52,10 +58,10 @@ class UserController {
                 res.status(404).json({ error: "Usuário não encontrado!" })
             }
         } catch (error) {
-            return res.status(500).json(error.message)
+            return res.status(500).json(error)
         }
     }
-    
+
     getUserById = async (req, res) => {
         const { id } = req.params
         try {
@@ -66,7 +72,7 @@ class UserController {
                 res.status(404).json({ msg: 'Usuário não encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json(error)
         }
     }
 
@@ -80,7 +86,7 @@ class UserController {
                 res.status(404).json({ msg: 'Usuário não encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json(error)
         }
     }
 }

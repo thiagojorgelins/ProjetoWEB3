@@ -10,9 +10,13 @@ class AdminControler {
         }
         try {
             const admin = await AdminService.createAdmin(nome, email, senha)
-            res.status(201).json(admin)
+            if (admin.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).json({ error: admin.errors[0].message })
+            } else {
+                res.status(201).json({ msg: 'Admin criado com sucesso', admin: admin })
+            }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json(error)
         }
     }
 
@@ -24,9 +28,9 @@ class AdminControler {
         try {
             const admin = await AdminService.getAdminByEmail(email)
             if (!admin) {
-                return res.status(404).json({ msg: 'Admin não encontrado' });
+                return res.status(404).json({ error: 'Admin não encontrado' });
             }
-            if (admin) {
+            else {
                 const senha_ok = await bcrypt.compare(senha, admin.senha)
                 if (senha_ok) {
                     let token = jwt.sign({
@@ -37,13 +41,11 @@ class AdminControler {
                     }, process.env.JWT_SECRET, { expiresIn: '24h' })
                     res.status(200).json({ msg: 'Admin logado com sucesso!', token: token })
                 } else {
-                    res.status(400).json({ erro: 'Senha incorreta' })
+                    res.status(400).json({ error: 'Senha incorreta' })
                 }
-            } else {
-                res.status(404).json({ msg: 'Admin não encontrado' })
             }
         } catch (error) {
-            return res.status(500).json(error.message)
+            return res.status(500).json(error)
         }
     }
 
@@ -57,7 +59,7 @@ class AdminControler {
                 res.status(404).json({ msg: 'Admin não encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error.message)
+            res.status(500).json(error)
         }
     }
 }

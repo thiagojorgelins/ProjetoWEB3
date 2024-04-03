@@ -11,7 +11,6 @@ function adminAcess(tipo) {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(decoded)
             if (decoded.tipo !== tipo) {
                 return res.status(401).json({ error: 'Unauthorized' })
             }

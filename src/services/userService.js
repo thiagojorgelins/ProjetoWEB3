@@ -1,4 +1,4 @@
-const database = require('../database/models')
+const { User } = require('../database/models')
 const bcrypt = require('bcrypt')
 class UserService {
 
@@ -13,7 +13,7 @@ class UserService {
             updatedAt: new Date()
         }
         try {
-            const user = await database.User.create(userData)
+            const user = await User.create(userData)
             return user
         } catch (error){
             return error
@@ -22,7 +22,7 @@ class UserService {
 
     async getAllUser() {
         try {
-            const users = await database.User.findAll({
+            const users = await User.findAll({
                 attributes: { exclude: ["senha"] }
             })
             return users
@@ -39,7 +39,7 @@ class UserService {
         }
     }
 
-    async getUserByEmail(id) {
+    async getUserByEmail(email) {
         try {
             return await User.findOne({ where: { email: email } })
         } catch (error) {

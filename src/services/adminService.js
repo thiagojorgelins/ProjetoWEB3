@@ -1,4 +1,4 @@
-const database = require('../database/models')
+const { Admin } = require('../database/models')
 const bcrypt = require('bcrypt')
 
 class AdminService {
@@ -12,7 +12,7 @@ class AdminService {
             updatedAt: new Date()
         }
         try {
-            const admin = await database.Admin.create(adminData)
+            const admin = await Admin.create(adminData)
             return admin
         } catch (error) {
             return error
@@ -21,7 +21,7 @@ class AdminService {
 
     async getAdminByEmail(email) {
         try {
-            const admin = await database.Admin.findOne({ where: { email: email } })
+            const admin = await Admin.findOne({ where: { email: email } })
             return admin
         } catch (error) {
             return error
