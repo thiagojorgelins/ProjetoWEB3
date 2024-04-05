@@ -24,6 +24,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Job',
   })
-  Job.sync()
   return Job;
 };

@@ -17,6 +17,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Address',
   });
-  Address.sync()
   return Address;
 };
