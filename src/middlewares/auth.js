@@ -25,5 +25,7 @@ function routerAccess(tipo) {
 
 const adminAuth = routerAccess('Admin')
 const userAuth = routerAccess('User')
+const companyAuth = routerAccess('Company')
+const employeeAuth = routerAccess('Employee')
 
-module.exports = { adminAuth, userAuth }
+module.exports = { adminAuth, userAuth, companyAuth, employeeAuth }
