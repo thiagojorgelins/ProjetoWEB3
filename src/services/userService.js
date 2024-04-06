@@ -2,13 +2,13 @@ const { User } = require('../database/models')
 const bcrypt = require('bcrypt')
 class UserService {
 
-    async createUser(nome, email,senha, cpf){
+    async createUser(nome, email,senha, cpf, tipo){
         const userData = {
             nome: nome,
             email: email,
             senha: await bcrypt.hash(senha, 10),
             cpf: cpf,
-            tipo: 'User',
+            tipo: tipo ? 'User' : 'Company',
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -16,7 +16,7 @@ class UserService {
             const user = await User.create(userData)
             return user
         } catch (error){
-            return error
+            throw error
         }
     }
 
@@ -27,15 +27,15 @@ class UserService {
             })
             return users
         } catch (error) {
-            return error
+            throw error
         }
     }
 
     async getUserById(id) {
         try {
-            return await User.findByPk(id, { attributes: { exclude: ["password"] } })
+            return await User.findByPk(id, { attributes: { exclude: ["senha"] } })
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -43,7 +43,7 @@ class UserService {
         try {
             return await User.findOne({ where: { email: email } })
         } catch (error) {
-            return error
+            throw error
         }
     }
 

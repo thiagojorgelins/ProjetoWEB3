@@ -1,12 +1,13 @@
 const AdminService = require('../services/adminService');
 const bcrypt = require('bcrypt')
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const sequelizeErrorHandler = require('../middlewares/sequelizeErrorHandler');
 
 class AdminControler {
     createAdmin = async (req, res) => {
         const { nome, email, senha } = req.body
         if (!nome || !email || !senha) {
-            return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
+            res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
             const admin = await AdminService.createAdmin(nome, email, senha)
@@ -16,19 +17,19 @@ class AdminControler {
                 res.status(201).json({ msg: 'Admin criado com sucesso', admin: admin })
             }
         } catch (error) {
-            res.status(500).json(error)
+            sequelizeErrorHandler(error, req, res);
         }
     }
 
     adminLogin = async (req, res) => {
         const { email, senha } = req.body
         if (!email || !senha) {
-            return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
+            res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
         try {
             const admin = await AdminService.getAdminByEmail(email)
             if (!admin) {
-                return res.status(404).json({ error: 'Admin não encontrado' });
+                res.status(404).json({ error: 'Admin não encontrado' });
             }
             else {
                 const senha_ok = await bcrypt.compare(senha, admin.senha)
@@ -45,7 +46,7 @@ class AdminControler {
                 }
             }
         } catch (error) {
-            return res.status(500).json(error)
+            sequelizeErrorHandler(error, req, res);
         }
     }
 
@@ -59,7 +60,7 @@ class AdminControler {
                 res.status(404).json({ msg: 'Admin não encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error)
+            sequelizeErrorHandler(error, req, res);
         }
     }
 }

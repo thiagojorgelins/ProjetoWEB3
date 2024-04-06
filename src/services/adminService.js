@@ -15,7 +15,7 @@ class AdminService {
             const admin = await Admin.create(adminData)
             return admin
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -24,7 +24,7 @@ class AdminService {
             const admin = await Admin.findOne({ where: { email: email } })
             return admin
         } catch (error) {
-            return error
+            throw error
         }
     }
 }

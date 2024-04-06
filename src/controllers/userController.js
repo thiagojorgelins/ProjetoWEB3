@@ -1,23 +1,16 @@
-const { ValidationErrorItem } = require('sequelize');
 const UserService = require('../services/userService');
-
+const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken")
+const sequelizeErrorHandler = require('../middlewares/sequelizeErrorHandler')
 class UserController {
 
     createUser = async (req, res) => {
-        const { nome, email, senha, cpf } = req.body
-
-        if (!nome || !email || !senha) {
-            return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
-        }
+        const { nome, email, senha, cpf, tipo } = req.body
         try {
-            const user = await UserService.createUser(nome, email, senha, cpf)
-            if (user.name === 'SequelizeUniqueConstraintError') {
-                res.status(400).json({ error: user.errors[0].message })
-            } else {
-                res.status(201).json({ msg: 'Usuário criado com sucesso!', user: user })
-            }
+            const user = await UserService.createUser(nome, email, senha, cpf, tipo);
+            res.status(201).json({ msg: 'Usuário criado com sucesso!', user: user });
         } catch (error) {
-            res.status(500).json({ error: error })
+            sequelizeErrorHandler(error, req, res);
         }
     }
 
@@ -30,17 +23,17 @@ class UserController {
                 res.status(404).json({ msg: 'Nenhum usuário encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error)
+            sequelizeErrorHandler(error, req, res);
         }
     }
 
     userLogin = async (req, res) => {
         const { email, senha } = req.body
         if (!email || !senha) {
-            return res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
+            res.status(400).json({ msg: 'Dados obrigatórios não foram preenchidos' })
         }
+        const user = await UserService.getUserByEmail(email)
         try {
-            const user = await this.userService.getUserByEmail(email)
             if (user) {
                 const senha_ok = await bcrypt.compare(senha, user.senha)
                 if (senha_ok) {
@@ -58,7 +51,7 @@ class UserController {
                 res.status(404).json({ error: "Usuário não encontrado!" })
             }
         } catch (error) {
-            return res.status(500).json(error)
+            res.status(500).json(error)
         }
     }
 
@@ -72,22 +65,12 @@ class UserController {
                 res.status(404).json({ msg: 'Usuário não encontrado' })
             }
         } catch (error) {
-            res.status(500).json(error)
+            sequelizeErrorHandler(error, req, res);
         }
     }
 
-    getUserByEmail = async (req, res) => {
-        const { email } = req.params
-        try {
-            const user = await UserService.getUserByEmail(email)
-            if (user) {
-                res.status(200).json(user)
-            } else {
-                res.status(404).json({ msg: 'Usuário não encontrado' })
-            }
-        } catch (error) {
-            res.status(500).json(error)
-        }
+    editUser = async (req, res) => {
+        res.send(req.headers)
     }
 }
 
