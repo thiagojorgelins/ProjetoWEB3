@@ -5,15 +5,15 @@ module.exports = {
     await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       avaliação: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       comentario: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       userId: {
         allowNull: false,
