@@ -23,7 +23,17 @@ JWT_SECRET="Alguma string aqui"
 
 **Para iniciar o sequelize**
 
-User o comando abaixo na raíz do projeto
+Poder usar os comandos abaixo na raíz do projeto,
+caso queira alterar onde eles serão criados, basta alterar o .sequelizerc
+
+```javascript
+module.exports = {
+  'config':          path.resolve('src','database','config','config.js'),
+  'migrations-path': path.resolve('src','database','migrations'),
+  'models-path':     path.resolve('src','database','models'),
+  'seeders-path':    path.resolve('src','database','seeders'),
+}
+```
 
 <code>npx sequelize-cli init</code>
 
