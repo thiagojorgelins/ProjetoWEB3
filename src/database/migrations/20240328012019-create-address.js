@@ -24,19 +24,13 @@ module.exports = {
       pais: {
         type: Sequelize.STRING
       },
-      userId: {
+      entityId: {
+        allowNull: false,
         type: Sequelize.UUID,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
       },
-      companyId: {
-        type: Sequelize.UUID,
-        references: {
-          model: 'Companies',
-          key: 'id'
-        }
+      entityType: {
+        type: Sequelize.ENUM('User', 'Company'),
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

@@ -6,12 +6,17 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasOne(models.Address, {
-        foreignKey: 'userId',
+        foreignKey: 'entityId',
+        constraints: false,
         as: 'address'
       })
       User.hasMany(models.Review,{
         foreignKey: 'userId',
         as: 'reviews'
+      })
+      User.hasMany(models.Company, {
+        foreignKey: 'userId',
+        as: 'ownerCompany'
       })
     }
   }
@@ -27,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     telefone: DataTypes.STRING,
     cpf: DataTypes.STRING,
     curriculo: DataTypes.STRING,
-    tipo: DataTypes.STRING
+    tipo: DataTypes.ENUM('User', 'Company', 'Employee')
   }, {
     sequelize,
     modelName: 'User',

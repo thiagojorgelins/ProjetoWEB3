@@ -5,8 +5,13 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Company extends Model {
     static associate(models) {
+      Company.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'owner'
+      })
       Company.hasOne(models.Address, {
-        foreignKey: 'companyId',
+        foreignKey: 'entityId',
+        constraints: false,
         as: 'address'
       })
       Company.hasMany(models.Review, {
@@ -32,7 +37,11 @@ module.exports = (sequelize, DataTypes) => {
     site: DataTypes.STRING,
     cnpj: DataTypes.STRING,
     telefone: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Company',
