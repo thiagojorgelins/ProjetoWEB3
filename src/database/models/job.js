@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     titulo: DataTypes.STRING,
-    descricao: DataTypes.STRING,
+    descricao: DataTypes.TEXT,
     salario: DataTypes.DOUBLE
   }, {
     sequelize,
     modelName: 'Job',
-  })
+  });
   return Job;
 };

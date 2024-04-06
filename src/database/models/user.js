@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     telefone: DataTypes.STRING,
     cpf: DataTypes.STRING,
     curriculo: DataTypes.STRING,
-    tipo: DataTypes.ENUM('User', 'Company', 'Employee')
+    tipo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

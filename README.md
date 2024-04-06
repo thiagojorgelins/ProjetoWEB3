@@ -37,17 +37,17 @@ module.exports = {
 
 <code>npx sequelize-cli init</code>
 
-> _npx sequelize-cli model:generate --name Admin --attributes email:string,senha:string_
+> _npx sequelize-cli model:generate --name Admin --attributes email:string,senha:string,tipo:string_
 
-> _npx sequelize-cli model:generate --name User --attributes nome:string,email:string,senha:string,telefone:string,cpf:string,curriculo:string,role:string_
+> _npx sequelize-cli model:generate --name User --attributes nome:string,email:string,senha:string,telefone:string,cpf:string,curriculo:string,tipo:string_
 
 > _npx sequelize-cli model:generate --name Company --attributes nomeDono:string,razaoSocial:string,nomeFantasia:string,segmento:string,site:string,cnpj:string,telefone:string,email:string_
 
 > _npx sequelize-cli model:generate --name Address --attributes logradouro:string,bairro:string,cidade:string,estado:string,pais:string_
 
-> _npx sequelize-cli model:generate --name Review --attributes avaliação:integer,comentario:integer_
+> _npx sequelize-cli model:generate --name Review --attributes avaliação:integer,comentario:text_
 
-> _npx sequelize-cli model:generate --name Job --attributes titulo:string,descricao:string,salario:double_
+> _npx sequelize-cli model:generate --name Job --attributes titulo:string,descricao:text,salario:double_
 
 ## Criar um usuário ADMIN
 

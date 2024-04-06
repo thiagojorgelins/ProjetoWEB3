@@ -11,7 +11,7 @@ module.exports = {
       },
       nome: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
@@ -19,7 +19,6 @@ module.exports = {
         unique: true
       },
       senha: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       telefone: {
@@ -34,8 +33,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       tipo: {
-        allowNull: false,
-        type: Sequelize.ENUM('User', 'Company', 'Employee'),
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

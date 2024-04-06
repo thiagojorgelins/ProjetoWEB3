@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Admin.init({
-    nome: DataTypes.STRING,
     email: DataTypes.STRING,
     senha: DataTypes.STRING,
     tipo: DataTypes.STRING

@@ -2,35 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Addresses', {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      logradouro: {
-        type: Sequelize.STRING
+      avaliação: {
+        type: Sequelize.INTEGER
       },
-      bairro: {
-        type: Sequelize.STRING
+      comentario: {
+        type: Sequelize.TEXT
       },
-      cidade: {
-        type: Sequelize.STRING
-      },
-      estado: {
-        type: Sequelize.STRING
-      },
-      pais: {
-        type: Sequelize.STRING
-      },
-      entityId: {
+      userId: {
         allowNull: false,
         type: Sequelize.UUID,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
-      entityType: {
-        type: Sequelize.ENUM('User', 'Company'),
+      companyId: {
         allowNull: false,
+        type: Sequelize.UUID,
+        references: {
+          model: 'Companies',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Addresses');
+    await queryInterface.dropTable('Reviews');
   }
 };

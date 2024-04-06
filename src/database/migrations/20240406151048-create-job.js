@@ -2,26 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Reviews', {
+    await queryInterface.createTable('Jobs', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      avaliação: {
-        type: Sequelize.INTEGER
+      titulo: {
+        type: Sequelize.STRING
       },
-      comentario: {
-        type: Sequelize.INTEGER
+      descricao: {
+        type: Sequelize.TEXT
       },
-      userId: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
+      salario: {
+        type: Sequelize.DOUBLE
       },
       companyId: {
         allowNull: false,
@@ -42,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Reviews');
+    await queryInterface.dropTable('Jobs');
   }
 };

@@ -2,29 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Jobs', {
+    await queryInterface.createTable('Admins', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        type: Sequelize.INTEGER
       },
-      titulo: {
+      email: {
         type: Sequelize.STRING
       },
-      descricao: {
+      senha: {
         type: Sequelize.STRING
       },
-      salario: {
-        type: Sequelize.DOUBLE
-      },
-      companyId: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: {
-          model: 'Companies',
-          key: 'id'
-        }
+      tipo: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Jobs');
+    await queryInterface.dropTable('Admins');
   }
 };
