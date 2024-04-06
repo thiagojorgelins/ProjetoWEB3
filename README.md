@@ -23,7 +23,7 @@ JWT_SECRET="Alguma string aqui"
 
 **Para iniciar o sequelize**
 
-User o comando abaixo na raís do projeto
+User o comando abaixo na raíz do projeto
 
 <code>npx sequelize-cli init</code>
 
