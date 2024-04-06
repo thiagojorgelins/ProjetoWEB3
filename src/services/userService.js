@@ -2,20 +2,22 @@ const { User } = require('../database/models')
 const bcrypt = require('bcrypt')
 class UserService {
 
-    async createUser(nome, email,senha, cpf, tipo){
+    async createUser(nome, email, senha, telefone, curriculo, cpf, tipo) {
         const userData = {
             nome: nome,
             email: email,
             senha: await bcrypt.hash(senha, 10),
+            telefone: telefone,
+            curriculo: curriculo,
             cpf: cpf,
-            tipo: tipo ? 'User' : 'Company',
+            tipo: tipo,
             createdAt: new Date(),
             updatedAt: new Date()
         }
         try {
             const user = await User.create(userData)
             return user
-        } catch (error){
+        } catch (error) {
             throw error
         }
     }
@@ -47,6 +49,23 @@ class UserService {
         }
     }
 
+    async editUser(id, nome, email, telefone, curriculo, cpf, tipo) {
+        try {
+            const userData = {
+                nome: nome,
+                email: email,
+                telefone: telefone,
+                curriculo: curriculo,
+                cpf: cpf,
+                tipo: tipo,
+                updatedAt: new Date()
+            }
+            const user = await User.update(userData, { where: { id: id } })
+            return user
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = new UserService()

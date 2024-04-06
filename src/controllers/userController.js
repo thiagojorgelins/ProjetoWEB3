@@ -5,9 +5,9 @@ const sequelizeErrorHandler = require('../middlewares/sequelizeErrorHandler')
 class UserController {
 
     createUser = async (req, res) => {
-        const { nome, email, senha, cpf, tipo } = req.body
+        const { nome, email, senha, telefone, curriculo, cpf, tipo } = req.body
         try {
-            const user = await UserService.createUser(nome, email, senha, cpf, tipo);
+            const user = await UserService.createUser(nome, email, senha, telefone, curriculo, cpf, tipo);
             res.status(201).json({ msg: 'Usuário criado com sucesso!', user: user });
         } catch (error) {
             sequelizeErrorHandler(error, req, res);
@@ -70,7 +70,23 @@ class UserController {
     }
 
     editUser = async (req, res) => {
-        res.send(req.headers)
+        const { id } = req.params
+        const { nome, email, telefone, curriculo, cpf, tipo } = req.body
+        const userId = req.user.id
+        try {
+            if (userId !== id) {
+                return res.status(401).json({ msg: 'Você não tem permissão para editar este usuário' })
+            } else {
+                const user = await UserService.editUser(id, nome, email, telefone, curriculo, cpf, tipo)
+                if (user) {
+                    res.status(200).json({ msg: 'Usuário atualizado com sucesso!'})
+                } else {
+                    res.status(404).json({ msg: 'Usuário não encontrado' })
+                }
+            }
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res);
+        }
     }
 }
 
