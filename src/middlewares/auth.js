@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-function routerAccess(tipo) {
+function routerAccess(tipos) {
     return async (req, res, next) => {
         const authHeader = req.headers.authorization
         if (!authHeader) {
@@ -11,7 +11,7 @@ function routerAccess(tipo) {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            if (decoded.tipo !== tipo && decoded.tipo !== 'Admin') {
+            if (!tipos.includes(decoded.tipo)) {
                 return res.status(401).json({ msg: 'Unauthorized' })
             }
             req.user = decoded
@@ -23,9 +23,9 @@ function routerAccess(tipo) {
     }
 }
 
-const adminAuth = routerAccess('Admin')
-const userAuth = routerAccess('User')
-const companyAuth = routerAccess('Company')
-const employeeAuth = routerAccess('Employee')
+const adminAuth = routerAccess(['Admin'])
+const userAuth = routerAccess(['User', 'Company', 'Employee', 'Admin'])
+const companyAuth = routerAccess(['Company', 'Admin'])
+const employeeAuth = routerAccess(['Employee', 'Company', 'Admin'])
 
 module.exports = { adminAuth, userAuth, companyAuth, employeeAuth }
