@@ -19,8 +19,8 @@ class AddressController {
                     const address = await AddressService.createAddress(logradouro, bairro, cidade, estado, pais, userId)
                     res.status(200).json({ Endereco: address })
                 } else if (viaCepData && !viaCepData.erro) {
-                    const { logradouro: viaCepLogradouro, bairro: viaCepBairro, localidade: viaCepCidade } = viaCepData;
-                    const address = await AddressService.createAddress(viaCepLogradouro, viaCepBairro, viaCepCidade, estado, pais, userId)
+                    const { logradouro, bairro, localidade } = viaCepData;
+                    const address = await AddressService.createAddress(logradouro, bairro, localidade, estado, pais, userId)
                     res.status(200).json({ Endereco: address });
                 } else {
                     res.status(400).json({ msg: 'Erro ao processar o CEP' })

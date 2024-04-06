@@ -7,9 +7,7 @@ class AdminService {
             nome: nome,
             email: email,
             senha: await bcrypt.hash(senha, 10),
-            tipo: 'Admin',
-            createdAt: new Date(),
-            updatedAt: new Date()
+            tipo: 'Admin'
         }
         try {
             const admin = await Admin.create(adminData)

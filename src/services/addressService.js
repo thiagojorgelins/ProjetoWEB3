@@ -8,13 +8,11 @@ class AddressService{
             cidade: cidade,
             estado: estado,
             pais: pais,
-            userId: userId,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            userId: userId
         }
         try {
             const address = await Address.create(addressData)
-            return address;
+            return address
         } catch (error) {
             throw error
         }

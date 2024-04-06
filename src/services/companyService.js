@@ -28,9 +28,7 @@ class CompanyService {
             email: email,
             senha: await bcrypt.hash(senha, 10),
             cpf: cpf,
-            tipo: 'Employee',
-            createdAt: new Date(),
-            updatedAt: new Date()
+            tipo: 'Employee'
         }
         try {
             const user = await User.create(userData)

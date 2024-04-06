@@ -10,9 +10,7 @@ class UserService {
             telefone: telefone,
             curriculo: curriculo,
             cpf: cpf,
-            tipo: tipo,
-            createdAt: new Date(),
-            updatedAt: new Date()
+            tipo: tipo
         }
         try {
             const user = await User.create(userData)
