@@ -30,6 +30,36 @@ class AddressController {
             sequelizeErrorHandler(error, req, res)
         }
     }
+
+    editAddress = async (req, res) => {
+        const { id } = req.params
+        const { logradouro, bairro, cidade, estado, pais } = req.body
+        try {
+            const address = await AddressService.editAddress(id, logradouro, bairro, cidade, estado, pais)
+            if (address) {
+                res.status(200).json({ msg: 'Endereço atualizado com sucesso!' })
+            } else {
+                res.status(404).json({ msg: 'Endereço não encontrado' })
+            }
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res)
+        }
+    }
+
+    deleteAddress = async (req, res) => {
+        const { id } = req.params
+        try {
+            const address = await AddressService.deleteAddress(id)
+            if (address) {
+                res.status(200).json({ msg: 'Endereço excluído com sucesso!' })
+            } else {
+                res.status(404).json({ msg: 'Endereço não encontrado' })
+            }
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res)
+        }
+    }
+    
 }
 
 module.exports = new AddressController()

@@ -38,6 +38,41 @@ class CompanyService {
         }
     }
 
+    async getAllCompany() {
+        try {
+            const companies = await Company.findAll()
+            return companies
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async editCompany(id, razaoSocial, nomeFantasia, segmento, site, cnpj, telefone, email) {
+        try {
+            const companyData = {
+                razaoSocial: razaoSocial,
+                nomeFantasia: nomeFantasia,
+                segmento: segmento,
+                site: site,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email,
+                updatedAt: new Date()
+            }
+            return await Company.update(companyData, { where: { id: id } })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async deleteCompany(id) {
+        try {
+            return await Company.destroy({ where: { id: id } })
+        } catch (error) {
+            throw error
+        }
+    }
+
 }
 
 module.exports = new CompanyService()

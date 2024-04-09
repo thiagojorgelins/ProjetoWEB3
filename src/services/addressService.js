@@ -28,7 +28,31 @@ class AddressService{
         }
     }
     
-    
+    async editAddress(id, logradouro, bairro, cidade, estado, pais) {
+        try {
+            const addressData = {
+                logradouro: logradouro,
+                bairro: bairro,
+                cidade: cidade,
+                estado: estado,
+                pais: pais,
+                updatedAt: new Date()
+            }
+            const address = await Address.update(addressData, { where: { id: id } })
+            return address
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async deleteAddress(id) {
+        try {
+            const address = await Address.destroy({ where: { id: id } })
+            return address
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = new AddressService()

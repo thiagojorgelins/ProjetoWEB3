@@ -24,6 +24,31 @@ class CompanyController {
     userToEmployee = async(req, res) => {
         return 'Criar controller para transformar um usuário normal em funcionário'
     }
+
+    getAllCompany = async(req, res) => {
+        try {
+            const companies = await CompanyService.getAllCompany()
+            res.status(200).json(companies)
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res);
+        }
+    }
+
+    editCompany = async(req, res) => {
+        try {
+            res.status(200).json({ msg: 'Empresa atualizada com sucesso!'})
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res);
+        }
+    }
+
+    deleteCompany = async(req, res) => {
+        try {
+            res.status(200).json({ msg: 'Empresa excluída com sucesso!'})
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res);
+        }
+    }
 }
 
 module.exports = new CompanyController()

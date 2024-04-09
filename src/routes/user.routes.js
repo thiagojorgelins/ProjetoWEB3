@@ -12,5 +12,6 @@ router.post('/endereco', userAuth, addressController.createAddress)
 router.get('/user', userAuth, userController.getAllUser)
 router.get('/user/:id', userAuth, userController.getUserById)
 router.patch('/user/:id', userAuth, userController.editUser)
+router.delete('/user/:id', userAuth, userController.deleteUser)
 
 module.exports = router

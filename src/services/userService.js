@@ -64,6 +64,15 @@ class UserService {
             throw error
         }
     }
+
+    async deleteUser(id) {
+        try {
+            const user = await User.destroy({ where: { id: id } })
+            return user
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = new UserService()

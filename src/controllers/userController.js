@@ -88,6 +88,26 @@ class UserController {
             sequelizeErrorHandler(error, req, res);
         }
     }
+
+    deleteUser = async (req, res) => {
+        const { id } = req.params
+        const userId = req.user.id
+        try {
+            if (userId !== id) {
+                return res.status(401).json({ msg: 'Você não tem permissão para excluir este usuário' })
+            } else {
+                const user = await UserService.deleteUser(id)
+                if (user) {
+                    res.status(200).json({ msg: 'Usuário excluído com sucesso!' })
+                } else {
+                    res.status(404).json({ msg: 'Usuário não encontrado' })
+                }
+            }
+        } catch (error) {
+            sequelizeErrorHandler(error, req, res)
+        }
+    }
+    
 }
 
 module.exports = new UserController()
